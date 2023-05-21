@@ -30,6 +30,14 @@ for(let i = 0; i < boxes.length; i++) {
       // Computar jogada
       if(player1 == player2) {
         player1++;
+
+        if(secondPlayer == 'ai-players') {
+
+          //função para executar jogada
+          computerPlay();
+          player2++;
+
+        }
       } else {
         player2++;
       }
@@ -45,6 +53,26 @@ for(let i = 0; i < boxes.length; i++) {
   })
 
 }
+
+// Evento para saber se é 2 players ou IA
+for(let i = 0; i < buttons.length; i++) {
+
+  buttons[i].addEventListener("click", function() {
+    secondPlayer = this.getAttribute("id");
+    console.log(secondPlayer);
+
+    for(j = 0; j < buttons.length; j++) {
+      buttons[j].style.display = 'none';
+    }
+
+    setTimeout(() => {
+      let container = document.querySelector("#container");
+      container.classList.remove("hide");
+    }, 400);
+
+  });
+}
+
 
 //Verifica quem vai jogar
 function checkEl(player1, player2) {
@@ -82,10 +110,10 @@ function checkWinCondition(){
     
     if(b1Child == 'x' && b2Child == 'x' && b3Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b1Child == 'o' && b2Child == 'o' && b3Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -97,10 +125,10 @@ function checkWinCondition(){
     
     if(b4Child == 'x' && b5Child == 'x' && b6Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b4Child == 'o' && b5Child == 'o' && b6Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -112,10 +140,10 @@ function checkWinCondition(){
     
     if(b7Child == 'x' && b8Child == 'x' && b9Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b7Child == 'o' && b8Child == 'o' && b9Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -129,10 +157,10 @@ function checkWinCondition(){
     
     if(b1Child == 'x' && b4Child == 'x' && b7Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b1Child == 'o' && b4Child == 'o' && b7Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -144,10 +172,10 @@ function checkWinCondition(){
     
     if(b1Child == 'x' && b4Child == 'x' && b7Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b1Child == 'o' && b4Child == 'o' && b7Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -159,10 +187,10 @@ function checkWinCondition(){
     
     if(b2Child == 'x' && b5Child == 'x' && b8Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b2Child == 'o' && b5Child == 'o' && b8Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -174,10 +202,10 @@ function checkWinCondition(){
     
     if(b3Child == 'x' && b6Child == 'x' && b9Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b3Child == 'o' && b6Child == 'o' && b9Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -190,10 +218,10 @@ function checkWinCondition(){
     
     if(b1Child == 'x' && b5Child == 'x' && b9Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b1Child == 'o' && b5Child == 'o' && b9Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -205,10 +233,10 @@ function checkWinCondition(){
     
     if(b3Child == 'x' && b5Child == 'x' && b7Child == 'x') {
       // x
-      console.log('X venceu');
+      declareWinner('x');
     }else if(b3Child == 'o' && b5Child == 'o' && b7Child == 'o'){
       // o
-      console.log('O venceu');
+      declareWinner('o');
     }
   }
 
@@ -221,6 +249,79 @@ function checkWinCondition(){
   }
 
   if(counter === 9) {
-    console.log('Deu velha');
+    declareWinner('Deu velha!');
   }
 }
+
+//limpa o jogo, declara o vencedor e att o placar
+function declareWinner(winner) {
+
+  let scoreboardX = document.querySelector("#scoreboard-1");
+  let scoreboardY = document.querySelector("#scoreboard-2");
+  let msg = '';
+
+  if(winner == 'x') {
+    scoreboardX.textContent = parseInt(scoreboardX.textContent) + 1;
+    msg = 'Joggador 1 venceu!';
+  }else if(winner == 'o') {
+    scoreboardY.textContent = parseInt(scoreboardY.textContent) + 1;
+    console.log(scoreboardX.textContent)
+    console.log(scoreboardX.textContent)
+    msg = 'Joggador 2 venceu!';
+  } else {
+    msg = 'Deu velha';
+  }
+
+  // Exibe a mensagem
+  messageText.innerHTML = msg;
+  messageContainer.classList.remove("hide");
+
+  // esconde a msg
+  setTimeout(() => {
+    messageContainer.classList.add("hide")
+  }, 3000);
+
+
+  //Zerar as jogadas
+  player1 = 0;
+  player2 = 0;
+
+  //remove x e o
+  let boxesToRemove = document.querySelectorAll(".box div");
+
+  for(let i = 0; i < boxesToRemove.length; i++) {
+    boxesToRemove[i].parentNode.removeChild(boxesToRemove[i])
+  }
+}
+
+//Executar a logica da jogada do CPU
+function computerPlay() {
+   
+  let cloneO = o.cloneNode(true);
+  counter = 0;
+  filled = 0;
+
+  for(let i = 0; i < boxes.length; i++) {
+
+    let randomNumber = Math.floor(Math.random() * 5);
+
+    // Só preencher se tiver vazio o filho
+    if(boxes[i].childNodes[0] == undefined) {
+      if(randomNumber <= 1) {
+        boxes[i].appendChild(cloneO);
+        counter++;
+        break;
+      }
+      //Checagem de quantas estão preenchidas
+    }else {
+      filled++;
+    }
+
+  }
+
+  if(counter == 0 && filled < 9) {
+    computerPlay();
+  }
+
+}
+console.log(computerPlay)
